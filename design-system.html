@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Design System — ALPHA Engenharia e Construção</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="stylesheet" href="assets/css/tokens.css">
+<link rel="stylesheet" href="assets/css/styles.css">
+<style>
+  .ds-top { padding: 2rem 0 3rem; border-bottom: 1px solid var(--line-on-dark-soft); }
+  .ds-top img { height: 72px; width: auto; }
+  .ds-section { padding: 4rem 0; border-bottom: 1px solid var(--line-on-dark-soft); }
+  .ds-section.section--light { border-color: var(--line-on-light); }
+  .ds-h2 { font-size: var(--fs-h2); font-weight: 700; line-height: 1.1; margin-bottom: .5rem; }
+  .ds-h3 { font-size: var(--fs-micro); letter-spacing: var(--tracking-caps); text-transform: uppercase; color: var(--gold-champagne); margin-bottom: 1rem; font-weight: 600; }
+  .section--light .ds-h3 { color: var(--gold-ink); }
+  .ds-note { color: var(--text-on-dark-muted); max-width: 70ch; margin-bottom: 2rem; }
+  .section--light .ds-note { color: var(--text-on-light-muted); }
+  .ds-group { margin-bottom: 2rem; }
+  .swatches { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 1rem; }
+  .swatch { border-radius: var(--r-md); overflow: hidden; border: 1px solid var(--line-on-dark-soft); background: var(--navy-900); }
+  .swatch__chip { height: 84px; border-bottom: 1px solid var(--line-on-dark-soft); }
+  .swatch__meta { padding: .75rem; display: grid; gap: .15rem; font-size: .8rem; }
+  .swatch__meta code { color: var(--text-on-dark-muted); font-size: .75rem; }
+  .gradients { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); }
+  .gradients div { border-radius: var(--r-md); padding: 1rem; border: 1px solid var(--line-on-dark-soft); font-size: .8rem; color: var(--text-on-dark-muted); }
+  .contrasts { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); }
+  .contrast { border-radius: var(--r-md); padding: 1rem; display: flex; align-items: center; gap: .75rem; border: 1px solid var(--line-on-dark-soft); }
+  .contrast span { font-size: 2rem; font-weight: 800; }
+  .contrast small { font-size: .72rem; line-height: 1.35; }
+  .type-row { display: grid; gap: .25rem; padding: 1.25rem 0; border-bottom: 1px solid var(--line-on-dark-soft); }
+  .type-row code { color: var(--text-on-dark-subtle); font-size: .75rem; }
+  .ds-row { display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; }
+  .ds-icons { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); }
+  .ds-icon { display: grid; justify-items: center; gap: .5rem; padding: 1rem .5rem; border-radius: var(--r-md); border: 1px solid var(--line-on-dark-soft); }
+  .ds-icon code { font-size: .72rem; color: var(--text-on-dark-muted); }
+  .ds-grid-2 { display: grid; gap: 1.5rem; }
+  .ds-tokens { display: grid; gap: .5rem; font-size: .85rem; }
+  .ds-tokens div { display: flex; align-items: center; gap: 1rem; }
+  .ds-tokens code { color: var(--text-on-dark-muted); min-width: 120px; }
+  .radius-box { width: 72px; height: 56px; background: var(--navy-800); border: 1px solid var(--gold); }
+  .rules li { display: flex; gap: .6rem; padding: .35rem 0; color: var(--text-on-dark-muted); }
+  .rules svg { width: 18px; height: 18px; flex: none; margin-top: .2rem; }
+  .rules .ok { color: #6FD39A; } .rules .no { color: #FF9B8C; }
+  .photo-demo { position: relative; border-radius: var(--r-lg); overflow: hidden; aspect-ratio: 4/3; }
+  .photo-demo img { width: 100%; height: 100%; object-fit: cover; }
+  .photo-demo::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 45%, rgba(5,13,36,.88)); }
+  .photo-demo p { position: absolute; z-index: 1; left: 1.25rem; bottom: 1.25rem; right: 1.25rem; font-weight: 600; }
+  @media (min-width: 900px) { .ds-grid-2 { grid-template-columns: 1fr 1fr; } }
+</style>
+</head>
+<body>
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">
+<symbol id="i-building" viewBox="0 0 24 24"><path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"/><path d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2"/><path d="M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2"/><path d="M10 6h4M10 10h4M10 14h4M10 18h4"/></symbol>
+<symbol id="i-road" viewBox="0 0 24 24"><path d="M4 22 8.5 2"/><path d="M20 22 15.5 2"/><path d="M12 4v2.5M12 10v2.5M12 16v3"/></symbol>
+<symbol id="i-factory" viewBox="0 0 24 24"><path d="M2 20a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8l-7 5V8l-7 5V4a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"/><path d="M7 18h1M12 18h1M17 18h1"/></symbol>
+<symbol id="i-wrench" viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></symbol>
+<symbol id="i-clipboard" viewBox="0 0 24 24"><rect width="8" height="4" x="8" y="2" rx="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="m9 14 2 2 4-4"/></symbol>
+<symbol id="i-hardhat" viewBox="0 0 24 24"><path d="M2 18a1 1 0 0 0 1 1h18a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v2z"/><path d="M10 10V5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v5"/><path d="M4 15v-3a6 6 0 0 1 6-6"/><path d="M14 6a6 6 0 0 1 6 6v3"/></symbol>
+<symbol id="i-crane" viewBox="0 0 24 24"><path d="M5 22V4"/><path d="M2 22h7"/><path d="M5 4h16"/><path d="M5 4 9 2v2"/><path d="M5 8l4-4M5 12l4-4M5 16l4-4"/><path d="M17 4v5"/><path d="M15 9h4v3h-4z"/></symbol>
+<symbol id="i-network" viewBox="0 0 24 24"><rect x="16" y="16" width="6" height="6" rx="1"/><rect x="2" y="16" width="6" height="6" rx="1"/><rect x="9" y="2" width="6" height="6" rx="1"/><path d="M5 16v-3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3"/><path d="M12 12V8"/></symbol>
+<symbol id="i-timer" viewBox="0 0 24 24"><path d="M10 2h4"/><path d="M12 14l3-3"/><circle cx="12" cy="14" r="8"/></symbol>
+<symbol id="i-chart" viewBox="0 0 24 24"><path d="M3 3v16a2 2 0 0 0 2 2h16"/><path d="m19 9-5 5-4-4-3 3"/></symbol>
+<symbol id="i-badge" viewBox="0 0 24 24"><path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z"/><path d="m9 12 2 2 4-4"/></symbol>
+<symbol id="i-shield" viewBox="0 0 24 24"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></symbol>
+<symbol id="i-target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></symbol>
+<symbol id="i-eye" viewBox="0 0 24 24"><path d="M2.06 12.35a1 1 0 0 1 0-.7 10.75 10.75 0 0 1 19.88 0 1 1 0 0 1 0 .7 10.75 10.75 0 0 1-19.88 0"/><circle cx="12" cy="12" r="3"/></symbol>
+<symbol id="i-gem" viewBox="0 0 24 24"><path d="M6 3h12l4 6-10 13L2 9Z"/><path d="M11 3 8 9l4 13 4-13-3-6"/><path d="M2 9h20"/></symbol>
+<symbol id="i-phone" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></symbol>
+<symbol id="i-mail" viewBox="0 0 24 24"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></symbol>
+<symbol id="i-pin" viewBox="0 0 24 24"><path d="M20 10c0 5-5.54 10.19-7.4 11.8a1 1 0 0 1-1.2 0C9.54 20.19 4 15 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></symbol>
+<symbol id="i-instagram" viewBox="0 0 24 24"><rect width="20" height="20" x="2" y="2" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><path d="M17.5 6.5h.01"/></symbol>
+<symbol id="i-arrow-right" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></symbol>
+<symbol id="i-arrow-up-right" viewBox="0 0 24 24"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></symbol>
+<symbol id="i-plus" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="M12 5v14"/></symbol>
+<symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></symbol>
+<symbol id="i-chev-left" viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></symbol>
+<symbol id="i-chev-right" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></symbol>
+<symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
+<symbol id="i-lock" viewBox="0 0 24 24"><rect width="18" height="11" x="3" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></symbol>
+<symbol id="i-map" viewBox="0 0 24 24"><path d="M14.1 5.9 9 3.3a2 2 0 0 0-1.8 0L3.6 5.1A1 1 0 0 0 3 6v13.4a1 1 0 0 0 1.4.9l3.7-1.9a2 2 0 0 1 1.8 0l5.1 2.6a2 2 0 0 0 1.8 0l3.6-1.8a1 1 0 0 0 .6-.9V4.9a1 1 0 0 0-1.4-.9l-3.7 1.9a2 2 0 0 1-1.8 0Z"/><path d="M15 6v15M9 3v15"/></symbol>
+<symbol id="i-blueprint" viewBox="0 0 24 24"><path d="M3 3h18v18H3z"/><path d="M3 9h18M9 21V9"/><path d="M13 13h4v4h-4z"/></symbol>
+<symbol id="i-whatsapp" viewBox="0 0 24 24"><g fill="currentColor" stroke="none"><path d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.16-.17.2-.35.22-.64.08-.3-.15-1.26-.47-2.39-1.48-.88-.79-1.48-1.76-1.65-2.06-.17-.3-.02-.46.13-.6.13-.14.3-.35.45-.52.15-.18.2-.3.3-.5.1-.2.05-.37-.03-.52-.07-.15-.67-1.61-.92-2.2-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48s1.07 2.88 1.21 3.07c.15.2 2.1 3.2 5.08 4.49.71.31 1.26.49 1.7.63.71.22 1.36.19 1.87.12.57-.09 1.76-.72 2-1.41.25-.7.25-1.29.18-1.41-.08-.13-.27-.2-.57-.35m-5.42 7.4h-.01a9.87 9.87 0 0 1-5.03-1.38l-.36-.21-3.74.98 1-3.65-.24-.37a9.86 9.86 0 0 1-1.51-5.26c0-5.45 4.44-9.88 9.89-9.88 2.64 0 5.12 1.03 6.99 2.9a9.83 9.83 0 0 1 2.89 6.99c0 5.45-4.44 9.88-9.88 9.88m8.41-18.3A11.82 11.82 0 0 0 12.05 0C5.5 0 .16 5.34.16 11.89c0 2.1.55 4.14 1.59 5.95L.06 24l6.3-1.65a11.88 11.88 0 0 0 5.68 1.45h.01c6.55 0 11.89-5.34 11.89-11.89a11.82 11.82 0 0 0-3.48-8.41Z"/></g></symbol>
+<symbol id="i-spark" viewBox="0 0 24 24"><g fill="currentColor" stroke="none"><path d="M12 0c.6 5.6 3.4 9.4 12 12-8.6 2.6-11.4 6.4-12 12-.6-5.6-3.4-9.4-12-12C8.6 9.4 11.4 5.6 12 0z"/></g></symbol>
+</svg>
+<main>
+<header class="ds-top"><div class="container" style="display:grid;gap:1.5rem">
+  <img src="assets/img/brand/logo-alpha-escuro.webp" width="814" height="363" alt="ALPHA Engenharia e Construção">
+  <div><span class="pill">Design System · v1.0</span></div>
+  <h1 class="h-display">Identidade <span class="accent">refinada</span> para o digital.</h1>
+  <p class="lead">Mantém a alma da marca (azul marinho profundo, dourado e branco, planta técnica, skyline e curvas douradas) e corrige o que a apresentação tinha de ruído: textura suja, ícones 3D de estilos diferentes, texto justificado e fotos com bordas irregulares.</p>
+  <p class="muted" style="font-size:.875rem">Todos os valores vêm de <code>assets/css/tokens.css</code>. Alterou lá, muda aqui e no site.</p>
+</div></header>
+
+<section class="ds-section"><div class="container">
+  <h2 class="ds-h2">Cores</h2>
+  <p class="ds-note">Azul marinho em camadas como base. Dourado em cor chapada e em filetes finos; gradiente só em linhas e selos, nunca em blocos grandes. Azul do logo apenas como acento.</p>
+  <div class="ds-group"><h3 class="ds-h3">Azul marinho</h3><div class="swatches"><div class="swatch"><div class="swatch__chip" style="background:#050D24"></div><div class="swatch__meta"><strong>Fundo profundo</strong><code>--navy-950</code><code>#050D24</code></div></div><div class="swatch"><div class="swatch__chip" style="background:#081734"></div><div class="swatch__meta"><strong>Fundo de seções</strong><code>--navy-900</code><code>#081734</code></div></div><div class="swatch"><div class="swatch__chip" style="background:#0C2150"></div><div class="swatch__meta"><strong>Cartões</strong><code>--navy-800</code><code>#0C2150</code></div></div><div class="swatch"><div class="swatch__chip" style="background:#12306F"></div><div class="swatch__meta"><strong>Bordas fortes</strong><code>--navy-700</code><code>#12306F</code></div></div><div class="swatch"><div class="swatch__chip" style="background:#1B3F8A"></div><div class="swatch__meta"><strong>Realce em gradientes</strong><code>--navy-600</code><code>#1B3F8A</code></div></div></div></div><div class="ds-group"><h3 class="ds-h3">Azul do logo</h3><div class="swatches"><div class="swatch"><div class="swatch__chip" style="background:#2457C5"></div><div class="swatch__meta"><strong>Só acento e gradientes sutis</strong><code>--blue-logo</code><code>#2457C5</code></div></div></div></div><div class="ds-group"><h3 class="ds-h3">Dourado</h3><div class="swatches"><div class="swatch"><div class="swatch__chip" style="background:#C9A24A"></div><div class="swatch__meta"><strong>Principal: filetes, ícones, números</strong><code>--gold</code><code>#C9A24A</code></div></div><div class="swatch"><div class="swatch__chip" style="background:#E2CB93"></div><div class="swatch__meta"><strong>Texto dourado em fundo escuro</strong><code>--gold-champagne</code><code>#E2CB93</code></div></div><div class="swatch"><div class="swatch__chip" style="background:#A8842F"></div><div class="swatch__meta"><strong>Sombra, fim de gradiente</strong><code>--gold-shadow</code><code>#A8842F</code></div></div><div class="swatch"><div class="swatch__chip" style="background:#7A5A14"></div><div class="swatch__meta"><strong>Texto dourado em fundo claro</strong><code>--gold-ink</code><code>#7A5A14</code></div></div></div></div><div class="ds-group"><h3 class="ds-h3">Neutros</h3><div class="swatches"><div class="swatch"><div class="swatch__chip" style="background:#FFFFFF"></div><div class="swatch__meta"><strong>Texto principal no escuro</strong><code>--white</code><code>#FFFFFF</code></div></div><div class="swatch"><div class="swatch__chip" style="background:#F4F6FB"></div><div class="swatch__meta"><strong>Seções de respiro</strong><code>--surface-light</code><code>#F4F6FB</code></div></div><div class="swatch"><div class="swatch__chip" style="background:#B9C3DA"></div><div class="swatch__meta"><strong>Texto corrido no escuro</strong><code>--text-on-dark-muted</code><code>#B9C3DA</code></div></div><div class="swatch"><div class="swatch__chip" style="background:#3E4C6B"></div><div class="swatch__meta"><strong>Texto corrido no claro</strong><code>--text-on-light-muted</code><code>#3E4C6B</code></div></div></div></div>
+  <div class="ds-group"><h3 class="ds-h3">Gradientes permitidos</h3>
+    <div class="gradients">
+      <div><div style="height:2px;background:var(--gold-line);margin:1.25rem 0"></div><code>--gold-line</code> · filetes e divisores</div>
+      <div><div style="width:56px;height:56px;border-radius:50%;background:var(--gold-seal);margin-bottom:.75rem"></div><code>--gold-seal</code> · selos e botão principal</div>
+      <div style="background:linear-gradient(150deg,var(--navy-800),var(--navy-950) 70%);min-height:96px"><code>navy-800 → navy-950</code> · cartões escuros</div>
+    </div>
+  </div>
+  <div class="ds-group"><h3 class="ds-h3">Contraste (mínimo AA)</h3><div class="contrasts"><div class="contrast" style="background:#050D24;color:#FFFFFF"><span>Aa</span><small>Branco / navy-950<br><b>19.0:1</b></small></div><div class="contrast" style="background:#050D24;color:#B9C3DA"><span>Aa</span><small>Muted / navy-950<br><b>10.9:1</b></small></div><div class="contrast" style="background:#0C2150;color:#E2CB93"><span>Aa</span><small>Champanhe / navy-800<br><b>9.8:1</b></small></div><div class="contrast" style="background:#C9A24A;color:#050D24"><span>Aa</span><small>Navy / dourado (botão)<br><b>8.0:1</b></small></div><div class="contrast" style="background:#F4F6FB;color:#0C2150"><span>Aa</span><small>Navy-800 / claro<br><b>14.4:1</b></small></div><div class="contrast" style="background:#F4F6FB;color:#7A5A14"><span>Aa</span><small>Gold-ink / claro<br><b>5.9:1</b></small></div></div></div>
+</div></section>
+
+<section class="ds-section"><div class="container">
+  <h2 class="ds-h2">Tipografia</h2>
+  <p class="ds-note">Montserrat em títulos e corpo, com títulos fortes. Playfair Display itálico só em uma palavra de destaque por título. Texto corrido sempre alinhado à esquerda, medida de leitura de até 62 caracteres. Fontes hospedadas localmente (.woff2).</p>
+  <div class="type-row"><code>Display · Montserrat 800 · clamp(36px → 68px)</code><p class="h-display">Engenharia que constrói <span class="accent">resultados.</span></p></div>
+  <div class="type-row"><code>H2 · Montserrat 700 · clamp(28px → 44px)</code><p class="h-section">Obras que comprovam o nosso <span class="accent">padrão</span>.</p></div>
+  <div class="type-row"><code>H3 · Montserrat 700 · clamp(18px → 22px)</code><p class="h-card">Laboratório ISO 7 para produção de fármacos injetáveis</p></div>
+  <div class="type-row"><code>Lead · Montserrat 400 · 16–18px</code><p class="lead">Projetos e obras civis, industriais, comerciais e hospitalares, com gestão baseada no PMI.</p></div>
+  <div class="type-row"><code>Corpo · Montserrat 400 · 16px / 1.65</code><p class="muted" style="max-width:62ch">Atuamos com gestão baseada no PMI, aplicando boas práticas de iniciação, planejamento, execução, monitoramento e encerramento para garantir controle e previsibilidade.</p></div>
+  <div class="type-row"><code>Rótulo · Montserrat 600 · 12px · caixa alta · 0.14em</code><p class="ds-h3" style="margin:0">Principais características</p></div>
+  <div class="type-row" style="border:0"><code>Destaque · Playfair Display 500 itálico</code><p class="accent" style="font-size:1.75rem">Engenharia que constrói resultados. E resultados que constroem o futuro.</p></div>
+</div></section>
+
+<section class="ds-section"><div class="container">
+  <h2 class="ds-h2">Botões, selos e etiquetas</h2>
+  <p class="ds-note">Altura mínima de 48px (44px no tamanho pequeno). Botão dourado para a ação principal (sempre WhatsApp); contorno para a secundária.</p>
+  <div class="ds-row" style="margin-bottom:1.5rem">
+    <a class="btn btn--gold" href="#"><svg class="ico" aria-hidden="true" focusable="false" style="fill:currentColor;stroke:none"><use href="#i-whatsapp"/></svg>Solicitar orçamento</a>
+    <a class="btn btn--ghost" href="#">Ver obras <svg class="ico" aria-hidden="true" focusable="false"><use href="#i-arrow-right"/></svg></a>
+    <a class="btn btn--navy" href="#">Botão navy</a>
+    <a class="btn btn--gold btn--sm" href="#"><svg class="ico" aria-hidden="true" focusable="false" style="fill:currentColor;stroke:none"><use href="#i-whatsapp"/></svg>Pequeno</a>
+    <a class="link-arrow" href="#">Link com seta <svg class="ico" aria-hidden="true" focusable="false"><use href="#i-arrow-right"/></svg></a>
+  </div>
+  <div class="ds-row">
+    <span class="pill">Selinho (pill) acima de títulos</span>
+    <span class="tag-float" style="position:static;animation:none"><i><svg class="ico" aria-hidden="true" focusable="false"><use href="#i-building"/></svg></i>Etiqueta flutuante</span>
+    <button class="chip" aria-pressed="true">Filtro ativo</button>
+    <button class="chip" aria-pressed="false">Filtro</button>
+    <span class="fill-me">[informar]</span>
+  </div>
+</div></section>
+
+<section class="ds-section"><div class="container">
+  <h2 class="ds-h2">Ícones</h2>
+  <p class="ds-note">Um único conjunto de linha (traço 1.5, cantos arredondados) em dourado, sempre na mesma moldura: quadrado arredondado de 14px de raio com borda dourada a 38%. SVG embutido no HTML, sem API externa.</p>
+  <div class="ds-icons"><div class="ds-icon"><span class="ico-frame"><svg class="ico" aria-hidden="true" focusable="false"><use href="#i-building"/></svg></span><code>building</code></div><div class="ds-icon"><span class="ico-frame"><svg class="ico" aria-hidden="true" focusable="false"><use href="#i-road"/></svg></span><code>road</code></div><div class="ds-icon"><span class="ico-frame"><svg class="ico" aria-hidden="true" focusable="false"><use href="#i-factory"/></svg></span><code>factory</code></div><div class="ds-icon"><span class="ico-frame"><svg class="ico" aria-hidden="true" focusable="false"><use href="#i-wrench"/></svg></span><code>wrench</code></div><div class="ds-icon"><span class="ico-frame"><svg class="ico" aria-hidden="true" focusable="false"><use href="#i-clipboard"/></svg></span><code>clipboard</code></div><div class="ds-icon"><span class="ico-frame"><svg class="ico" aria-hidden="true" focusable="false"><use href="#i-hardhat"/></svg></span><code>hardhat</code></div><div class="ds-icon"><span class="ico-frame"><svg class="ico" aria-hidden="true" focusable="false"><use href="#i-crane"/></svg></span><code>crane</code></div><div class="ds-icon"><span class="ico-frame"><svg class="ico" aria-hidden="true" focusable="false"><use href="#i-network"/></svg></span><code>network</code></div><div class="ds-icon"><span class="ico-frame"><svg class="ico" aria-hidden="true" focusable="false"><use href="#i-timer"/></svg></span><code>timer</code></div><div class="ds-icon"><span class="ico-frame"><svg class="ico" aria-hidden="true" focusable="false"><use href="#i-chart"/></svg></span><code>chart</code></div><div class="ds-icon"><span class="ico-frame"><svg class="ico" aria-hidden="true" focusable="false"><use href="#i-badge"/></svg></span><code>badge</code></div><div class="ds-icon"><span class="ico-frame"><svg class="ico" aria-hidden="true" focusable="false"><use href="#i-shield"/></svg></span><code>shield</code></div><div class="ds-icon"><span class="ico-frame"><svg class="ico" aria-hidden="true" focusable="false"><use href="#i-target"/></svg></span><code>target</code></div><div class="ds-icon"><span class="ico-frame"><svg class="ico" aria-hidden="true" focusable="false"><use href="#i-eye"/></svg></span><code>eye</code></div><div class="ds-icon"><span class="ico-frame"><svg class="ico" aria-hidden="true" focusable="false"><use href="#i-gem"/></svg></span><code>gem</code></div><div class="ds-icon"><span class="ico-frame"><svg class="ico" aria-hidden="true" focusable="false"><use href="#i-phone"/></svg></span><code>phone</code></div><div class="ds-icon"><span class="ico-frame"><svg class="ico" aria-hidden="true" focusable="false"><use href="#i-mail"/></svg></span><code>mail</code></div><div class="ds-icon"><span class="ico-frame"><svg class="ico" aria-hidden="true" focusable="false"><use href="#i-pin"/></svg></span><code>pin</code></div><div class="ds-icon"><span class="ico-frame"><svg class="ico" aria-hidden="true" focusable="false"><use href="#i-instagram"/></svg></span><code>instagram</code></div><div class="ds-icon"><span class="ico-frame"><svg class="ico" aria-hidden="true" focusable="false"><use href="#i-arrow-right"/></svg></span><code>arrow-right</code></div><div class="ds-icon"><span class="ico-frame"><svg class="ico" aria-hidden="true" focusable="false"><use href="#i-arrow-up-right"/></svg></span><code>arrow-up-right</code></div><div class="ds-icon"><span class="ico-frame"><svg class="ico" aria-hidden="true" focusable="false"><use href="#i-plus"/></svg></span><code>plus</code></div><div class="ds-icon"><span class="ico-frame"><svg class="ico" aria-hidden="true" focusable="false"><use href="#i-x"/></svg></span><code>x</code></div><div class="ds-icon"><span class="ico-frame"><svg class="ico" aria-hidden="true" focusable="false"><use href="#i-chev-left"/></svg></span><code>chev-left</code></div><div class="ds-icon"><span class="ico-frame"><svg class="ico" aria-hidden="true" focusable="false"><use href="#i-chev-right"/></svg></span><code>chev-right</code></div><div class="ds-icon"><span class="ico-frame"><svg class="ico" aria-hidden="true" focusable="false"><use href="#i-check"/></svg></span><code>check</code></div><div class="ds-icon"><span class="ico-frame"><svg class="ico" aria-hidden="true" focusable="false"><use href="#i-lock"/></svg></span><code>lock</code></div><div class="ds-icon"><span class="ico-frame"><svg class="ico" aria-hidden="true" focusable="false"><use href="#i-map"/></svg></span><code>map</code></div><div class="ds-icon"><span class="ico-frame"><svg class="ico" aria-hidden="true" focusable="false"><use href="#i-blueprint"/></svg></span><code>blueprint</code></div></div>
+</div></section>
+
+<section class="ds-section"><div class="container">
+  <h2 class="ds-h2">Fundo e ornamentos</h2>
+  <p class="ds-note">Camadas de azul com gradiente suave, grade de planta técnica a 5% de opacidade, skyline vetorial a 4% e curvas douradas finas em SVG que se movem em parallax. Sem textura de ruído.</p>
+  <div class="ds-grid-2">
+    <div style="position:relative;height:260px;border-radius:var(--r-lg);overflow:hidden;border:1px solid var(--line-on-dark-soft);background:linear-gradient(160deg,var(--navy-800),var(--navy-950))">
+      <svg class="gold-curves " viewBox="0 0 820 520" aria-hidden="true" data-parallax="0"><defs><linearGradient id="gc1" x1="1" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#E2CB93" stop-opacity="0"/><stop offset=".35" stop-color="#E2CB93"/><stop offset=".7" stop-color="#C9A24A"/><stop offset="1" stop-color="#A8842F" stop-opacity="0"/></linearGradient></defs><path d="M820 20 C 600 40, 360 170, 40 520" stroke="url(#gc1)" stroke-width="1.4" opacity="0.9"/><path d="M820 90 C 620 110, 420 230, 150 520" stroke="url(#gc1)" stroke-width="1" opacity="0.55"/><path d="M820 170 C 660 190, 500 300, 300 520" stroke="url(#gc1)" stroke-width="0.8" opacity="0.35"/></svg>
+      <svg class="skyline" viewBox="0 0 1440 240" preserveAspectRatio="xMidYMax slice" aria-hidden="true"><path fill="currentColor" d="M0 240V140h44V240ZM50 240V40h28V240ZM82 240V40h60V240ZM111 40v-14h2v14ZM144 240V200h28V240ZM174 240V200h28V240ZM208 240V90h28V240ZM242 240V120h60V240ZM308 240V40h52V240ZM333 40v-14h2v14ZM362 240V160h60V240ZM426 240V120h36V240ZM466 240V180h60V240ZM528 240V180h60V240ZM592 240V200h28V240ZM626 240V140h28V240ZM660 240V160h60V240ZM724 240V160h60V240ZM788 240V90h36V240ZM826 240V120h28V240ZM858 240V160h44V240ZM908 240V10h28V240ZM938 240V140h44V240ZM986 240V200h28V240ZM1020 240V60h60V240ZM1049 60v-14h2v14ZM1084 240V120h44V240ZM1132 240V200h60V240ZM1194 240V90h44V240ZM1215 90v-14h2v14ZM1240 240V160h28V240ZM1274 240V60h60V240ZM1303 60v-14h2v14ZM1338 240V90h44V240ZM1359 90v-14h2v14ZM1386 240V160h28V240ZM1416 240V40h60V240ZM1445 40v-14h2v14Z"/><g fill="none" stroke="currentColor" stroke-width="3"><path d="M300 240V40M286 240V40M300 60L286 80M286 100l14 20M300 140l-14 20M286 180l14 20"/><path d="M230 40h240M300 40l-30-20h30M440 40v40"/><path d="M430 80h20v16h-20z"/></g><g fill="none" stroke="currentColor" stroke-width="3"><path d="M1130 240V70M1144 240V70M1130 90l14 20M1144 130l-14 20M1130 170l14 20"/><path d="M1040 70h220M1144 70l26-18h-26M1070 70v54"/></g></svg>
+      <p style="position:absolute;left:1.25rem;top:1.25rem;font-size:.8rem;color:var(--text-on-dark-muted);z-index:2">Curvas douradas + skyline + grade</p>
+    </div>
+    <div style="display:grid;gap:1.5rem;align-content:center">
+      <div class="glow-divider"><svg class="spark" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-spark"/></svg></div>
+      <p class="muted" style="font-size:.875rem">Divisor: linha de luz dourada com cruz de brilho no centro.</p>
+    </div>
+  </div>
+</div></section>
+
+<section class="ds-section"><div class="container">
+  <h2 class="ds-h2">Fotos</h2>
+  <p class="ds-note">Fotos reais das obras, sempre com raio de 20px, sem borda branca, recorte padronizado e leve correção de tom. Quando há texto por cima, degradê azul marinho de baixo para cima.</p>
+  <div class="ds-grid-2">
+    <div class="photo-demo"><img src="assets/img/obras/equinor-3.webp" width="546" height="566" alt="Corredor de escritório corporativo"><p>Texto sobre foto sempre com degradê</p></div>
+    <ul class="rules">
+      <li><svg class="ico ok" aria-hidden="true"><use href="#i-check"/></svg>Raio 20px (<code>--r-lg</code>) em todas as fotos</li>
+      <li><svg class="ico ok" aria-hidden="true"><use href="#i-check"/></svg>Proporções fixas: 4:3 nos cartões, 4:5 em destaque, 1:1 na galeria</li>
+      <li><svg class="ico ok" aria-hidden="true"><use href="#i-check"/></svg>WebP, com largura e altura definidas e carregamento tardio</li>
+      <li><svg class="ico no" aria-hidden="true"><use href="#i-x"/></svg>Nada de bordas brancas, molduras ou cantos diferentes</li>
+      <li><svg class="ico no" aria-hidden="true"><use href="#i-x"/></svg>Nada de texto corrido sobre foto agitada sem degradê</li>
+      <li><svg class="ico no" aria-hidden="true"><use href="#i-x"/></svg>Nunca imagens geradas ou de banco no lugar de obras reais</li>
+    </ul>
+  </div>
+</div></section>
+
+<section class="ds-section section--light"><div class="container">
+  <h2 class="ds-h2">Cartões e componentes</h2>
+  <p class="ds-note">Seções claras (<code>--surface-light</code>) dão respiro entre blocos escuros: usadas em Sobre + Serviços e em O Padrão Alpha.</p>
+  <div class="ds-grid-2">
+    <article class="std-card"><div class="std-card__top"><span class="ico-frame"><svg class="ico" aria-hidden="true" focusable="false"><use href="#i-timer"/></svg></span><span class="std-card__num" aria-hidden="true">01</span></div><h3>Cartão numerado (claro)</h3><p>Filete dourado no topo, ícone na moldura padrão e número vazado.</p></article>
+    <article class="mvv__card"><span class="ico-frame"><svg class="ico" aria-hidden="true" focusable="false"><use href="#i-target"/></svg></span><h3>Cartão simples</h3><p>Usado em Missão, Visão e Valores, ligados por setas.</p></article>
+  </div>
+  <dl class="stats" style="margin-top:1.5rem">
+    <div class="stat"><dt class="sr-only">Exemplo</dt><dd class="stat__number">5</dd><dd class="stat__label">Número em destaque (contador)</dd></div>
+    <div class="stat stat--todo"><dt class="sr-only">Exemplo</dt><dd class="stat__number"><span class="fill-me">[informar]</span></dd><dd class="stat__label">Campo a preencher pela empresa</dd></div>
+    <div class="stat"><dt class="sr-only">Exemplo</dt><dd class="stat__number">8</dd><dd class="stat__label">Clientes de referência</dd></div>
+    <div class="stat"><dt class="sr-only">Exemplo</dt><dd class="stat__number">20<span style="font-size:.5em">px</span></dd><dd class="stat__label">Raio padrão de fotos</dd></div>
+  </dl>
+</div></section>
+
+<section class="ds-section"><div class="container">
+  <div class="ds-grid-2">
+    <div>
+      <h3 class="ds-h3">Cartão escuro (pilar)</h3>
+      <article class="pillar"><span class="ico-frame"><svg class="ico" aria-hidden="true" focusable="false"><use href="#i-hardhat"/></svg></span><h3>Corpo técnico especializado</h3><p>Fundo navy translúcido, borda sutil que acende no hover.</p></article>
+    </div>
+    <div>
+      <h3 class="ds-h3">Etapa da linha do tempo</h3>
+      <div class="timeline"><ol class="timeline__list"><li class="step"><div class="step__top"><span class="step__num">01</span><h3>Iniciação</h3></div><p>Marcador dourado na linha vertical.</p></li></ol></div>
+    </div>
+  </div>
+  <h3 class="ds-h3" style="margin-top:2.5rem">Medidas</h3>
+  <div class="ds-grid-2">
+    <div class="ds-tokens">
+      <div><code>--r-sm 10px</code><span class="radius-box" style="border-radius:10px"></span></div>
+      <div><code>--r-md 14px</code><span class="radius-box" style="border-radius:14px"></span></div>
+      <div><code>--r-lg 20px</code><span class="radius-box" style="border-radius:20px"></span></div>
+      <div><code>--r-xl 28px</code><span class="radius-box" style="border-radius:28px"></span></div>
+    </div>
+    <div class="ds-tokens">
+      <div><code>--shadow-md</code><span class="radius-box" style="border-radius:14px;border-color:transparent;box-shadow:var(--shadow-md)"></span></div>
+      <div><code>--shadow-lg</code><span class="radius-box" style="border-radius:14px;border-color:transparent;box-shadow:var(--shadow-lg)"></span></div>
+      <div><code>--glow-gold</code><span class="radius-box" style="border-radius:14px;border-color:transparent;box-shadow:var(--glow-gold)"></span></div>
+      <div><code>movimento</code><span class="muted" style="font-size:.8rem">Entrada ao rolar 0.9s, ease-out-expo. Tudo desligado com prefers-reduced-motion.</span></div>
+    </div>
+  </div>
+</div></section>
+
+<section class="ds-section" style="border:0"><div class="container">
+  <h2 class="ds-h2">Logo</h2>
+  <p class="ds-note">Usado exatamente como está, sem redesenho nem recoloração. Esta versão foi recortada da apresentação; substitua pelo arquivo original (PNG transparente ou SVG) assim que possível.</p>
+  <div class="ds-row" style="gap:2rem">
+    <div style="padding:2rem;border-radius:var(--r-lg);background:var(--navy-950);border:1px solid var(--line-on-dark-soft)"><img src="assets/img/brand/logo-alpha-escuro.webp" width="814" height="363" alt="Logo ALPHA versão para fundo escuro" style="height:90px;width:auto"></div>
+    <div style="padding:2rem;border-radius:var(--r-lg);background:var(--navy-950);border:1px solid var(--line-on-dark-soft)"><img src="assets/img/brand/logo-alpha-icone.webp" width="256" height="363" alt="Ícone ALPHA" style="height:90px;width:auto"></div>
+    <div style="display:grid;gap:.5rem;justify-items:center"><img src="assets/img/brand/apple-touch-icon.png" width="180" height="180" alt="Favicon ALPHA" style="width:64px;border-radius:14px"><code style="font-size:.75rem;color:var(--text-on-dark-muted)">favicon</code></div>
+  </div>
+</div></section>
+</main>
+</body>
+</html>
