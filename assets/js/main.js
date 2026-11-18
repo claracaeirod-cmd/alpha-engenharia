@@ -62,7 +62,20 @@
   var reveals = $$('.reveal');
   if (!reduceMotion && 'IntersectionObserver' in window) {
     var revealObs = new IntersectionObserver(function (entries) {
-      entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('visible'); revealObs.unobserve(e.target); } });
+      // Itens que entram juntos aparecem em cascata (um depois do outro).
+      var n = 0;
+      entries.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        var el = e.target;
+        if (!/reveal-delay-/.test(el.className) && n > 0) {
+          var d = Math.min(n, 8) * 90;
+          el.style.transitionDelay = d + 'ms';
+          setTimeout(function () { el.style.transitionDelay = ''; }, d + 1200);
+        }
+        n++;
+        el.classList.add('visible');
+        revealObs.unobserve(el);
+      });
     }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
     reveals.forEach(function (el) { revealObs.observe(el); });
   } else {
@@ -120,6 +133,69 @@
     }, { threshold: 0.6 });
     counters.forEach(function (el) { countObs.observe(el); });
   }
+
+  /* ---------- SUBLINHADO DOURADO NOS TÍTULOS ---------- */
+  var accents = $$('.h-section .accent, .h-display .accent');
+  if (!reduceMotion && 'IntersectionObserver' in window) {
+    var accentObs = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('is-drawn'); accentObs.unobserve(e.target); } });
+    }, { threshold: 1 });
+    accents.forEach(function (el) { accentObs.observe(el); });
+  } else {
+    accents.forEach(function (el) { el.classList.add('is-drawn'); });
+  }
+
+  /* ---------- O PADRÃO ALPHA: holofote + cartões acendendo um a um ---------- */
+  var stdSection = $('#diferenciais');
+  var stdCards = $$('.std-card');
+  if (stdSection && stdCards.length) {
+    if (reduceMotion || !('IntersectionObserver' in window)) {
+      stdCards.forEach(function (c) { c.classList.add('is-in'); });
+    } else {
+      // Camada escura que cobre o resto do site enquanto a seção está em foco
+      var dim = document.createElement('div');
+      dim.className = 'spotlight-dim';
+      dim.setAttribute('aria-hidden', 'true');
+      document.body.appendChild(dim);
+
+      var spotTicking = false;
+      var updateSpotlight = function () {
+        var r = stdSection.getBoundingClientRect();
+        var vh = window.innerHeight;
+        var covered = (Math.min(r.bottom, vh) - Math.max(r.top, 0)) / vh;
+        document.body.classList.toggle('is-spotlight', covered > 0.5);
+        spotTicking = false;
+      };
+      window.addEventListener('scroll', function () { if (!spotTicking) { requestAnimationFrame(updateSpotlight); spotTicking = true; } }, { passive: true });
+      window.addEventListener('resize', updateSpotlight);
+      updateSpotlight();
+
+      // Fila: os cartões que entram juntos acendem em ordem (01, 02, 03, 04)
+      var queue = [], busy = false;
+      var nextCard = function () {
+        if (!queue.length) { busy = false; return; }
+        queue.shift().classList.add('is-in');
+        setTimeout(nextCard, 520);
+      };
+      var cardObs = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (e.isIntersecting) { queue.push(e.target); cardObs.unobserve(e.target); }
+        });
+        queue.sort(function (a, b) { return stdCards.indexOf(a) - stdCards.indexOf(b); });
+        if (!busy && queue.length) { busy = true; setTimeout(nextCard, 450); }
+      }, { threshold: 0.35 });
+      stdCards.forEach(function (c) { cardObs.observe(c); });
+    }
+  }
+
+  /* ---------- MARCAS: brilho que segue o mouse ---------- */
+  $$('.partner').forEach(function (p) {
+    p.addEventListener('pointermove', function (e) {
+      var r = p.getBoundingClientRect();
+      p.style.setProperty('--mx', ((e.clientX - r.left) / r.width * 100).toFixed(1) + '%');
+      p.style.setProperty('--my', ((e.clientY - r.top) / r.height * 100).toFixed(1) + '%');
+    });
+  });
 
   /* ---------- ACORDEÃO DE SERVIÇOS ---------- */
   var accItems = $$('.acc-item');
