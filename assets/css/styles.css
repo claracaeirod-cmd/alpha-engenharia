@@ -655,3 +655,97 @@ section[id], [id="conteudo"] { scroll-margin-top: 84px; }
 #parceiros { padding-bottom: calc(var(--section-y) / 2); }
 .contact { padding-top: calc(var(--section-y) / 2); }
 .modal__close { position: absolute; top: .75rem; right: .75rem; float: none; margin: 0; }
+
+/* ==========================================================================
+   ANIMAÇÕES EXTRAS
+   ========================================================================== */
+
+/* ---------- O Padrão Alpha: holofote ----------
+   Quando a seção ocupa a maior parte da tela, o resto do site escurece
+   e os cartões acendem um por um (01, 02, 03, 04). */
+.spotlight-dim {
+  position: fixed; inset: 0; z-index: 45; pointer-events: none;
+  background: rgba(2, 6, 18, .82);
+  opacity: 0; transition: opacity .9s var(--ease-out-quart);
+}
+body.is-spotlight .spotlight-dim { opacity: 1; }
+#diferenciais { z-index: 46; transition: box-shadow 1s var(--ease-out-quart); }
+body.is-spotlight #diferenciais { box-shadow: 0 0 0 1px rgba(226, 203, 147, .35), 0 0 90px 10px rgba(226, 203, 147, .22); }
+#diferenciais::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background:
+    radial-gradient(70% 45% at 50% 0%, rgba(226, 203, 147, .42), transparent 70%),
+    radial-gradient(45% 35% at 50% 100%, rgba(201, 162, 74, .14), transparent 70%);
+  opacity: 0; transition: opacity 1.2s var(--ease-out-quart);
+}
+body.is-spotlight #diferenciais::after { opacity: 1; }
+#diferenciais .h-section .accent { transition: background-size 1.3s .35s var(--ease-out-expo), text-shadow 1s; }
+body.is-spotlight #diferenciais .h-section .accent { text-shadow: 0 0 28px rgba(201, 162, 74, .45); }
+
+.js .std-card {
+  opacity: 0; transform: translateY(56px) scale(.92); filter: blur(8px);
+  transition: opacity .9s var(--ease-out-expo), transform 1.1s var(--ease-out-expo), filter .9s var(--ease-out-expo), box-shadow var(--dur-base);
+}
+.js .std-card.is-in { opacity: 1; transform: none; filter: none; animation: stdGlow 2s var(--ease-out-quart); }
+.js .std-card.is-in:hover { transform: translateY(-6px); transition-duration: .9s, .5s, .9s, .4s; }
+@keyframes stdGlow {
+  0%   { box-shadow: 0 0 0 0 rgba(201, 162, 74, 0), var(--shadow-light); }
+  30%  { box-shadow: 0 0 0 2px rgba(201, 162, 74, .95), 0 34px 80px -18px rgba(201, 162, 74, .65); }
+  100% { box-shadow: 0 0 0 0 rgba(201, 162, 74, 0), var(--shadow-light); }
+}
+/* faixa de luz que atravessa o cartão ao acender */
+.std-card::before {
+  content: ""; position: absolute; inset: 0; z-index: 2; pointer-events: none;
+  background: linear-gradient(105deg, transparent 32%, rgba(226, 203, 147, .55) 50%, transparent 68%);
+  transform: translateX(-130%);
+}
+.std-card.is-in::before { animation: cardShine 1.5s .2s var(--ease-out-quart); }
+@keyframes cardShine { to { transform: translateX(130%); } }
+.std-card.is-in .ico-frame { animation: icoPop 1s .15s var(--ease-out-expo) both; }
+@keyframes icoPop { from { opacity: 0; transform: scale(.4) rotate(-25deg); } }
+.js .std-card.is-in .std-card__num {
+  background: var(--gold-seal); -webkit-background-clip: text; background-clip: text; color: transparent;
+  animation: numPop 1.4s .1s var(--ease-out-expo) both;
+}
+@keyframes numPop {
+  from { opacity: 0; transform: scale(1.8) translateY(-8px); }
+  45%  { opacity: 1; }
+  to   { opacity: .7; transform: none; }
+}
+
+/* ---------- Marcas: o logo cresce e um brilho segue o mouse ---------- */
+.partner { isolation: isolate; overflow: hidden; transition: box-shadow var(--dur-base); }
+.partner img { transition: opacity var(--dur-base), transform .7s var(--ease-out-expo), filter .7s var(--ease-out-expo); }
+.partner::before {
+  content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background: radial-gradient(260px circle at var(--mx, 50%) var(--my, 50%), rgba(226, 203, 147, .2), transparent 65%);
+  opacity: 0; transition: opacity var(--dur-base);
+}
+.partner:hover, .partner:focus-within { box-shadow: inset 0 0 0 1px rgba(226, 203, 147, .5); }
+.partner:hover::before, .partner:focus-within::before { opacity: 1; }
+.partner:hover img, .partner:focus-within img { transform: scale(1.3); }
+.partner:hover .logo-color { filter: drop-shadow(0 12px 24px rgba(0, 0, 0, .5)); }
+@media (hover: hover) {
+  .partners__grid:hover .partner:not(:hover) .logo-mono { opacity: .28; }
+}
+.js .partner.reveal:not(.visible) { transform: translateY(24px) scale(.88); }
+
+/* ---------- Sublinhado dourado que se desenha nos títulos ---------- */
+.h-section .accent, .h-display .accent {
+  padding-bottom: .06em;
+  background-image: linear-gradient(90deg, var(--gold), var(--gold-champagne) 60%, var(--gold));
+  background-repeat: no-repeat; background-position: 0 100%; background-size: 0% 2px;
+  transition: background-size 1.3s .35s var(--ease-out-expo);
+}
+.h-section .accent.is-drawn, .h-display .accent.is-drawn { background-size: 100% 2px; }
+
+/* ---------- Botões dourados: reflexo de luz ---------- */
+.btn--gold { position: relative; overflow: hidden; isolation: isolate; }
+.btn--gold::after {
+  content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background: linear-gradient(110deg, transparent 30%, rgba(255, 255, 255, .6) 50%, transparent 70%);
+  transform: translateX(-130%); transition: transform .9s var(--ease-out-expo);
+}
+.btn--gold:hover::after { transform: translateX(130%); }
+.hero .btn--gold::after { animation: btnShine 1.4s 1.3s var(--ease-out-quart); }
+@keyframes btnShine { to { transform: translateX(130%); } }
